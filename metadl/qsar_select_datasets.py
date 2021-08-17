@@ -13,6 +13,7 @@ def read_cmd():
 
 
 def run(args):
+    num_episodes = 100
     all_dids = []
     all_molecules = set()
     for dataset_id in range(23520, 40462):
@@ -27,6 +28,8 @@ def run(args):
             frame, _, _, columns = data.get_data(include_row_id=True, target=data.default_target_attribute)
             if len(columns) != 1025:
                 continue
+            if frame.shape[0] < 80 or frame.shape[0] > 300:
+                continue
 
             for column in columns:
                 if column != 'molecule_id' and column != 'pXC50' and not column.startswith('FCFP4_1024'):
@@ -39,8 +42,8 @@ def run(args):
             if valid:
                 all_molecules.update(molecules)
                 all_dids.append(dataset_id)
-                logging.info("did %d num columns: %d" % (dataset_id, len(columns)))
-            if len(all_dids) == 200:
+                logging.info("(%d/%d) did %d shape: %s" % (len(all_dids), num_episodes, dataset_id, str(frame.shape)))
+            if len(all_dids) == num_episodes:
                 print(all_dids)
                 all_dids = []
         except ValueError:
