@@ -38,6 +38,7 @@ def read_cmd():
     parser.add_argument('--dataset_ids', nargs="+", default=dataset_1, type=int)
     parser.add_argument('--min_examples', default=10, type=int)
     parser.add_argument('--output_dir', default=os.path.expanduser('~/experiments/metadl/'), type=str)
+    parser.add_argument('--filename', default='qsar2', type=str)
     args_, misc = parser.parse_known_args()
 
     return args_
@@ -88,14 +89,16 @@ def run(args):
         frame['pXC50'] = np.array(res, dtype=int)
         frame = frame[frame.pXC50 % 2 == 0]
         mean_score = run_classifier_on_frame(frame.copy(deep=True))
-        if mean_score < 0.2:
-            logging.info('Mean score of dataset %d low: %f' (did, mean_score))
+        if mean_score[0] < 0.2:
+            logging.info('Mean score of dataset %d low: %f' % (did, mean_score[0]))
         frame = format_frame(frame, did)
+        logging.info('Shape frame: (%d,%d)' % frame.shape)
         all_frames.append(frame)
 
     total_frame = pd.concat(all_frames)
+    logging.info('Shape total frame: (%d,%d)' % total_frame.shape)
     os.makedirs(args.output_dir, exist_ok=True)
-    output_file = args.output_dir + '/qsar1.csv'
+    output_file = args.output_dir + '/%s.csv' % args.filename
     total_frame.to_csv(output_file)
     logging.info('saved to %s' % output_file)
 
