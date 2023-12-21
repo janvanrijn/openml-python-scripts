@@ -42,7 +42,8 @@ def run(args):
         # print(idx, df.columns.values[idx], df[column].min, 1.0)
 
     description = 'The collection consists of six data sets containing telemetry data of the Mars Express Spacecraft (MEX), a spacecraft orbiting Mars and operated by the European Space Agency. The data, in terms of context data and thermal power consumption measurements, capture the status of the spacecraft over four Martian years sampled at six different time resolutions ranging from 1 min to 60 min. From a data analysis point-of-view, analysing these data presents great challenges - even for the more sophisticated state-of-the-art artificial intelligence methods. In particular, given the heterogeneity, complexity and magnitude of the data, they can be employed in different scenarios and analysed through the prism of a variety of machine learning tasks, such as multi-target regression, learning from data streams, anomaly detection, clustering etc. While analysing MEX"s telemetry data is critical for aiding very important decisions regarding the spacecraft status, it can be used to extract novel knowledge and monitor the spacecrafts" health, but also to benchmark artificial intelligence methods designed for a variety of tasks.'
-    creator = 'Džeroski, Sašo; Ženko, Bernard; Simidjievski, Nikola; Breskvar, Martin; Petkovic, Matej; Kocev, Dragi; et al. (2022)'
+    creator = 'Dzeroski, Saso; Zenko, Bernard; Simidjievski, Nikola; Breskvar, Martin; Petkovic, Matej; Kocev, Dragi; et al. (2022)'
+    pleasecite = creator + ' Machine-learning ready data on the Thermal Power Consumption of the Mars Express Spacecraft. figshare. Collection. https://doi.org/10.6084/m9.figshare.c.5360420.v1'
 
     mars_dataset = create_dataset(
         # The name of the dataset (needs to be unique).
@@ -50,8 +51,8 @@ def run(args):
         # a-z, A-Z, 0-9 and the following special characters: _\-\.(),
         name="ThermalPowerConsumptionMarsExpress60",
         # Textual description of the dataset.
-        description="TODO",        # The person who created the dataset.
-        creator="todo",
+        description=description,        # The person who created the dataset.
+        creator=creator,
         # People who contributed to the current version of the dataset.
         contributor=None,
         # The date the data was originally collected, given by the uploader.
@@ -70,11 +71,11 @@ def run(args):
         # identifiers and indexes. E.g. "feat1" or ["feat1","feat2"]
         ignore_attribute=None,
         # How to cite the paper.
-        citation="TODO",
+        citation=pleasecite,
         attributes="auto",
         data=df,
         # A version label which is provided by the user.
-        version_label="test",
+        version_label=None,
         original_data_url="https://springernature.figshare.com/collections/Machine-learning_ready_data_on_the_Thermal_Power_Consumption_of_the_Mars_Express_Spacecraft/5360420/1",
         paper_url="https://www.nature.com/articles/s41597-022-01336-z",
     )
